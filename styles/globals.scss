@@ -1,0 +1,79 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+}
+.links{
+  display: flex;
+  gap: 1em;
+}
+
+* {
+  box-sizing: border-box;
+}
+h1{
+  font-size:4em;
+}
+code{
+  padding: 0.2em 0.7em;
+  border-radius: 0.5em;
+  border: 1px solid lightgrey;
+  background-color: rgb(236, 236, 236);
+  font-weight: normal;
+  margin-right: 0.3em;
+  cursor: pointer;
+}
+.container {
+  margin: 0.5em 15em;
+}
+button,input{
+  border: 1px solid lightgrey;
+  outline: none;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  cursor: pointer;
+  &:hover{
+  opacity: 0.5;
+  }
+}
+input[type="color"] {
+	height: max-content;
+}
+
+
+.editor{
+  display: grid;
+  grid-template-columns: 3fr 1.5fr;
+  gap: 0.5em;
+  .mockupContainer{
+    border-radius: 1.5em 0 0 1.5em;
+    padding: 3em;
+    border:2px solid lightgrey;
+  }
+  .editorPannel{
+    border-radius: 0 1.5em 1.5em 0;
+    padding: 1em 2em;
+    border:2px solid lightgrey;
+    .editToolAlign{
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+      gap: 0.5em;
+    }
+  }
+}
+.generatedComponent{
+  font-family: monospace;
+  border: 2px solid lightgrey;
+  background-color: rgb(48, 48, 48);
+  color: white;
+  box-shadow:  0px 5px 15px grey;
+  padding: 1.5em;
+  border-radius:1.5em;
+  margin-bottom: 1.5em;
+}
