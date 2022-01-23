@@ -12,14 +12,37 @@ import GeneratedComponent from '../lib/GeneratedComponent';
 export default function Home() {
   const [currentMockupType, setCurrentMockupType] = useState('BrowserMockup');
 
-  const [mockupType, setMockupType] = useState('');
+  const [mockupPlaceHolderImage, setMockupPlaceHolderImage] = useState('https://www.psdstack.com/wp-content/uploads/2019/08/copyright-free-images-750x420.jpg');
+  const [mobileMockupPlaceHolderImage, setMobileMockupPlaceHolderImage] = useState('https://images.unsplash.com/photo-1574285013029-29296a71930e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dmVydGljYWx8ZW58MHx8MHx8&w=1000&q=80');
+
+  const [mockupType, setMockupType] = useState('default');
   const [mockupAngleX, setMockupAngleX] = useState(0);
   const [mockupAngleY, setMockupAngleY] = useState(0);
   const [mockupShadow, setMockupShadow] = useState('');
   const [mockupBorder, setMockupBorder] = useState('');
   const [mockupColor, setMockupColor] = useState('white');
   const [mockupAccentColor, setMockupAccentColor] = useState('black');
-  const [mockupUrlValue, setMockupUrlValue] = useState('react-mockup-editor');
+  const [mockupHeadValue, setMockupHeadValue] = useState('react-mockup-editor');
+  const [mockupWindowControlPosition, setMockupWindowControlPosition] = useState('left');
+
+  const resetState = () => {
+    setMockupType('default');
+    setMockupAngleX(0);
+    setMockupAngleY(0);
+    setMockupShadow('');
+    setMockupBorder('');
+    setMockupColor('white');
+    setMockupAccentColor('black');
+    setMockupHeadValue('react-mockup-editor');
+    setMockupWindowControlPosition('left');
+  }
+  const resetForMobile = () => {
+    setMockupType('');
+    setMockupColor('');
+    setMockupAccentColor('');
+    setMockupHeadValue('');
+    setMockupWindowControlPosition('');
+  }
 
   return (
     <div className={'container'}>
@@ -32,9 +55,9 @@ export default function Home() {
       <main className={'main'}>
         <h1>React Mockup Editor</h1>
         <section className={'links'}>
-          <Link href="/">About</Link>
-          <Link href="/">Github</Link>
-          <Link href="/">NPM</Link>
+          <Link href="https://github.com/501A-Designs">Developer GitHub</Link>
+          <Link href="https://github.com/501A-Designs/react-mockup">Github</Link>
+          <Link href="https://www.npmjs.com/package/react-mockup">NPM</Link>
         </section>
         <section>
           <div>
@@ -42,9 +65,9 @@ export default function Home() {
             <div>
               <div>
                 <span>Switch to: </span>
-                <code onClick={() => setCurrentMockupType('BrowserMockup')}>BrowserMockup</code>
-                <code onClick={() => setCurrentMockupType('MobileMockup')}>MobileMockup</code>
-                <code onClick={() => setCurrentMockupType('WindowMockup')}>WindowMockup</code>
+                <code onClick={() => { setCurrentMockupType('BrowserMockup'); resetState() }}>BrowserMockup</code>
+                <code onClick={() => { setCurrentMockupType('MobileMockup'); resetForMobile() }}>MobileMockup</code>
+                <code onClick={() => { setCurrentMockupType('WindowMockup'); resetState() }}>WindowMockup</code>
               </div>
               <h3>CurrentMockup Type: <code>{currentMockupType}</code></h3>
             </div>
@@ -52,7 +75,7 @@ export default function Home() {
               <div className={'mockupContainer'}>
                 {currentMockupType === 'BrowserMockup' &&
                   <BrowserMockup
-                    src={""}
+                    src={mockupPlaceHolderImage}
                     type={mockupType}
                     angleX={mockupAngleX + 'deg'}
                     angleY={mockupAngleY + 'deg'}
@@ -60,61 +83,71 @@ export default function Home() {
                     border={mockupBorder}
                     color={mockupColor}
                     accentColor={mockupAccentColor}
-                    urlValue={mockupUrlValue}
+                    urlValue={mockupHeadValue}
+                    windowControlPosition={mockupWindowControlPosition}
                   />
                 }
                 {currentMockupType === 'MobileMockup' &&
                   <>
                     <h4>This Component is still in its beta development</h4>
                     <MobileMockup
-                      src={""}
+                      src={mobileMockupPlaceHolderImage}
+                      size={1}
                       type={mockupType}
                       angleX={mockupAngleX + 'deg'}
                       angleY={mockupAngleY + 'deg'}
-                      // shadow={mockupShadow}
-                      // border={mockupBorder}
+                      shadow={mockupShadow}
+                      border={mockupBorder}
                       color={mockupColor}
                     />
                   </>
                 }
                 {currentMockupType === 'WindowMockup' &&
                   <WindowMockup
-                    src={""}
+                    src={mockupPlaceHolderImage}
                     type={mockupType}
                     angleX={mockupAngleX + 'deg'}
                     angleY={mockupAngleY + 'deg'}
                     shadow={mockupShadow}
                     border={mockupBorder}
                     color={mockupColor}
+                    windowName={mockupHeadValue}
+                    accentColor={mockupAccentColor}
+                    windowControlPosition={mockupWindowControlPosition}
                   />
                 }
               </div>
               <div className={'editorPannel'}>
+                <button onClick={() => resetState()}>Reset All</button>
                 {currentMockupType !== 'MobileMockup' &&
                   <>
                     <EditTool name="Type" type={mockupType}>
-                      <button onClick={() => setMockupType('')}>Default</button>
+                      <button onClick={() => setMockupType('default')}>Default</button>
                       <button onClick={() => setMockupType('mac')}>Mac</button>
                       <button onClick={() => setMockupType('outline')}>Outline</button>
                       <button onClick={() => setMockupType('chrome')}>Chrome</button>
                     </EditTool>
-                    <EditTool name="Border" type={mockupBorder}>
-                      <button onClick={() => setMockupBorder('')}>Default</button>
-                      <button onClick={() => setMockupBorder('none')}>None</button>
-                    </EditTool>
-                    <EditTool name="Shadow" type={mockupShadow}>
-                      <button onClick={() => setMockupShadow('')}>Default</button>
-                      <button onClick={() => setMockupShadow('none')}>None</button>
-                      <input placeholder="Custom" type="text" />
+                    <EditTool name="Window Control Position" type={mockupWindowControlPosition}>
+                      <button onClick={() => setMockupWindowControlPosition('left')}>Left</button>
+                      <button onClick={() => setMockupWindowControlPosition('right')}>Right</button>
                     </EditTool>
                   </>
                 }
-                {currentMockupType === 'BrowserMockup' &&
+                <EditTool name="Border" type={mockupBorder}>
+                  <button onClick={() => setMockupBorder('')}>Default</button>
+                  <button onClick={() => setMockupBorder('none')}>None</button>
+                </EditTool>
+                <EditTool name="Shadow" type={mockupShadow}>
+                  <button onClick={() => setMockupShadow('')}>Default</button>
+                  <button onClick={() => setMockupShadow('none')}>None</button>
+                  <input placeholder="Custom" type="text" />
+                </EditTool>
+                {currentMockupType !== 'MobileMockup' &&
                   <EditTool
-                    name="URL Value"
+                    name={currentMockupType == 'BrowserMockup' ? 'Display URL' : 'Display Title'}
                     type={''}
                   >
-                    <input onChange={(e) => { e.preventDefault(); setMockupUrlValue(e.target.value) }} />
+                    <input onChange={(e) => { e.preventDefault(); setMockupHeadValue(e.target.value) }} />
                   </EditTool>
                 }
                 <EditTool
@@ -131,19 +164,21 @@ export default function Home() {
                   <button onClick={() => setMockupAngleY(mockupAngleY + 0.5)}>Left</button>
                   <button onClick={() => setMockupAngleY(mockupAngleY - 0.5)}>Right</button>
                 </EditTool>
-                <EditTool name="Color" type={mockupColor}>
-                  <button onClick={() => setMockupColor('white')}>White</button>
-                  <button onClick={() => setMockupColor('black')}>Black</button>
-                  <button onClick={() => setMockupColor('grey')}>Grey</button>
-                  <input type="color" value={mockupColor} onChange={(e) => { e.preventDefault(); setMockupColor(e.target.value); }} />
-                </EditTool>
-                {currentMockupType === 'BrowserMockup' &&
-                  <EditTool name="Accent Color" type={mockupAccentColor}>
-                    <button onClick={() => setMockupAccentColor('white')}>White</button>
-                    <button onClick={() => setMockupAccentColor('black')}>Black</button>
-                    <button onClick={() => setMockupAccentColor('grey')}>Grey</button>
-                    <input type="color" value={mockupAccentColor} onChange={(e) => { e.preventDefault(); setMockupAccentColor(e.target.value); }} />
-                  </EditTool>
+                {currentMockupType !== 'MobileMockup' &&
+                  <>
+                    <EditTool name="Color" type={mockupColor}>
+                      <button onClick={() => setMockupColor('white')}>White</button>
+                      <button onClick={() => setMockupColor('black')}>Black</button>
+                      <button onClick={() => setMockupColor('grey')}>Grey</button>
+                      <input type="color" value={mockupColor} onChange={(e) => { e.preventDefault(); setMockupColor(e.target.value); }} />
+                    </EditTool>
+                    <EditTool name="Accent Color" type={mockupAccentColor}>
+                      <button onClick={() => setMockupAccentColor('white')}>White</button>
+                      <button onClick={() => setMockupAccentColor('black')}>Black</button>
+                      <button onClick={() => setMockupAccentColor('grey')}>Grey</button>
+                      <input type="color" value={mockupAccentColor} onChange={(e) => { e.preventDefault(); setMockupAccentColor(e.target.value); }} />
+                    </EditTool>
+                  </>
                 }
               </div>
             </div>
@@ -160,6 +195,8 @@ export default function Home() {
               mockupBorder={mockupBorder}
               mockupColor={mockupColor}
               mockupAccentColor={mockupAccentColor}
+              mockupHeadValue={mockupHeadValue}
+              mockupWindowControlPosition={mockupWindowControlPosition}
             />
           </div>
         </section>
@@ -167,7 +204,7 @@ export default function Home() {
 
       <footer className={'footer'}>
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          href="https://501a.netlify.app"
           target="_blank"
           rel="noopener noreferrer"
         >
