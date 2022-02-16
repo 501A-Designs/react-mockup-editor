@@ -140,8 +140,9 @@ export default function Home() {
                 <EditTool name="Shadow" type={mockupShadow}>
                   <button onClick={() => setMockupShadow('')}>Default</button>
                   <button onClick={() => setMockupShadow('none')}>None</button>
-                  <input placeholder="Custom" type="text" />
+                  <input placeholder="Custom" onChange={(e) => { e.preventDefault(); setMockupShadow(e.target.value) }}/>
                 </EditTool>
+                <small>*The custom input allows you to insert your own css box-shadow properties. Ex) 0px 5px 15px grey</small>
                 {currentMockupType !== 'MobileMockup' &&
                   <EditTool
                     name={currentMockupType == 'BrowserMockup' ? 'Display URL' : 'Display Title'}
